@@ -3,63 +3,48 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        
-    }
+    
+        public function index()
+        {
+            return response()->json(Order::with('user')->latest()->paginate(10));
+        }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        public function store(Request $request)
+        {
+            $validator = Validator::make($request->all(), [
+                'user_id' => 'required|exists:users,id',
+                'item_name' => 'required|string|max:255',
+                'price' => 'required|numeric|min:0',
+                'status' => 'required|in:pending,paid,cancelled',
+            ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $validator->errors()->first(),
+                    'errors' => $validator->errors()
+                ], 422);
+            }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+            $order = Order::create($validator->validated());
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+            return response()->json([
+                'success' => true,
+                'order' => $order,
+                'message' => 'Order created successfully.'
+            ]);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
+        public function updateStatus(Request $request, $id)
+        {
+            $order = Order::findOrFail($id);
+            $order->update(['status' => $request->status]);
+            return response()->json(['success' => true]);
+        }
 }
