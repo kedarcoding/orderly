@@ -22,7 +22,9 @@
           <th class="p-2 border">User ID</th>
           <th class="p-2 border">Item</th>
           <th class="p-2 border">Price</th>
+          <th class="p-2 border">Created At</th>
           <th class="p-2 border">Status</th>
+          
         </tr>
       </thead>
       <tbody>
@@ -32,8 +34,9 @@
           <td class="border p-1">{{order.user?.id}}</td>
           <td class="border p-1">{{ order.item_name }}</td>
           <td class="border p-1">{{ order.price }}</td>
-          <td class="border p-1">
-            <div class="flex items-center">
+           <td class="border p-1">{{ formatDate(order.created_at) }}</td>
+          <td class="border p-1 flex justify-center items-center">
+            <div class="flex items-center ">
               <select
                 v-model="order.status"
                 @change="updateStatus(order)"
@@ -162,6 +165,10 @@ function showErrorMessage(text) {
   setTimeout(() => {
     errorMessage.value = ''
   }, 3000)
+}
+
+function formatDate(datetime) {
+  return new Date(datetime).toLocaleString();
 }
 onMounted(fetchOrders)
 </script>
