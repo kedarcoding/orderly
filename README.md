@@ -3,16 +3,17 @@ Interview Task Work
 
 Order Management System – Laravel + Vue 3
 This is a mini Order Management System built using Laravel 10 (REST API) as backend and Vue 3 + TailwindCSS as frontend.
+ 
+You must open two command prompt for laravel and vuejs.
 
-git clone https://github.com/your-username/order-management.git
+First Terminal / run commands :
+
+git clone https://github.com/kedarcoding/orderly.git
 
 *****PHP / Laravel  setup****
 
 cd orderly/api
-
-bash/ terminal: 
 composer install
-
 cp .env.example .env
 
 
