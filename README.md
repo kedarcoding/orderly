@@ -16,7 +16,7 @@ cd orderly/api
 composer install
 cp .env.example .env
 
-# Set DB details in .env   ensure db name password username etc in .env
+----Set DB details in .env   ensure db name password username etc in .env---
 
 php artisan key:generate
 php artisan migrate --seed
