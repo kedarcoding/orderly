@@ -20,7 +20,9 @@ cp .env.example .env
 ****Set DB details in .env   ensure db name password username etc in .env***
 
 php artisan key:generate
+
 php artisan migrate --seed
+
 php artisan serve  
 
 backend will run on  http://localhost:8000      ( this is backend url not frontend  )
@@ -28,7 +30,9 @@ backend will run on  http://localhost:8000      ( this is backend url not fronte
 terminal 2 : For Vue3 
 
 cd orderly/frontend
+
 npm install
+
 npm run dev
 
 run URL :    http://localhost:5173                    This is final url run and test
