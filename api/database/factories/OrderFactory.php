@@ -3,6 +3,7 @@
 namespace Database\Factories;
 use App\Models\Order;
 use App\Models\Customer;
+use App\Models\Item;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,11 +18,15 @@ class OrderFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-             'customer_id' => Customer::inRandomOrder()->first()->id ?? Customer::factory(),
-             'item_name'   => $this->faker->word,
-             'price'       => $this->faker->randomFloat(2, 100, 1000),
-             'status'      => $this->faker->randomElement(['pending', 'paid', 'cancelled']),
-        ];
+         $price = fake()->randomFloat(2, 100, 1000);
+         $qty = fake()->numberBetween(1, 5);
+         return [
+            'customer_id' => Customer::factory(),
+            'item_id' => Item::factory(),
+            'quantity' => $qty,
+            'price' => $price,
+            'total' => $qty * $price,
+            'status' => fake()->randomElement(['pending', 'paid', 'cancelled']),
+         ];
     }
 }

@@ -3,16 +3,22 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
-class OrderController extends Controller
+class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        
+    public function index(Request $request)
+    {   
+        $perPage=$request->perPage??20;
+        $data= Item::paginate();
+        if(!empty($data)){
+           return response()->json(['data'=>$data],200);
+        }
+           return response()->json(['message'=>'No data'],204);
     }
 
     /**
